@@ -12,7 +12,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Add this step to create shield directory and files
+      - name: West Init
+        run: west init -l config
+
+      - name: West Update
+        run: west update
+
+      - name: West Zephyr export
+        run: west zephyr-export
+
+      # Now copy the shield files after west update
       - name: Create Shield Directory
         run: |
           mkdir -p config/boards/shields/corne
