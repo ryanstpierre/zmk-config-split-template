@@ -11,6 +11,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      # Add this step to create shield directory and files
+      - name: Create Shield Directory
+        run: |
+          mkdir -p config/boards/shields/corne
+          cp -r zmk/app/boards/shields/corne/* config/boards/shields/corne/
+
       - name: Cache west modules
         uses: actions/cache@v4
         env:
