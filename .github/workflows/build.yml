@@ -12,6 +12,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # Clean up any existing west workspace
+      - name: West Clean
+        run: |
+          rm -rf .west
+          rm -rf modules
+          rm -rf zephyr
+          rm -rf bootloader
+          rm -rf zmk
+
       - name: West Init
         run: west init -l config
 
@@ -21,11 +30,13 @@ jobs:
       - name: West Zephyr export
         run: west zephyr-export
 
-      # Now copy the shield files after west update
       - name: Create Shield Directory
         run: |
           mkdir -p config/boards/shields/corne
           cp -r zmk/app/boards/shields/corne/* config/boards/shields/corne/
+
+      - name: West Build (Corne Left)
+        run: west build -s zmk/app -b nice_nano_v2 -- -DSHIELD=corne_left -DZMK_CONFIG="${GITHUB_WORKSPACE}/config"
 
       - name: Cache west modules
         uses: actions/cache@v4
