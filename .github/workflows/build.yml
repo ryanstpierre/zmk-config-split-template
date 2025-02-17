@@ -12,14 +12,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Clean up any existing west workspace
+      # More thorough cleanup
       - name: West Clean
         run: |
-          rm -rf .west
-          rm -rf modules
-          rm -rf zephyr
-          rm -rf bootloader
-          rm -rf zmk
+          rm -rf /__w/zmk-config-split-template/zmk-config-split-template/.west
+          rm -rf /__w/zmk-config-split-template/zmk-config-split-template/modules
+          rm -rf /__w/zmk-config-split-template/zmk-config-split-template/zephyr
+          rm -rf /__w/zmk-config-split-template/zmk-config-split-template/bootloader
+          rm -rf /__w/zmk-config-split-template/zmk-config-split-template/zmk
+          rm -rf .west modules zephyr bootloader zmk
 
       - name: West Init
         run: west init -l config
